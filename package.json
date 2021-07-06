@@ -6,6 +6,8 @@
   "scripts": {
     "build": "tsc",
     "test": "jest",
+    "test-e2e-local": "echo 'e2e testing against locally running service....' && AWS_PROFILE=tomn-personal STAGE=dev TEST_LOCAL=yes jest ./*.e2e.test.ts",
+    "test-e2e-dev": "echo 'e2e testing against deployed dev endpoints...' && AWS_PROFILE=tomn-personal STAGE=dev jest ./*.e2e.test.ts",
     "deploy-dev": "npm run build && sls deploy --stage dev --profile tomn-personal",
     "start": "npm run build && SLS_DEBUG=* AWS_PROFILE=tomn-personal sls offline"
   },
@@ -24,10 +26,12 @@
     "@types/jest": "^26.0.23",
     "@types/node": "^16.0.0",
     "serverless": "^2.50.0",
+    "serverless-offline": "^7.0.0",
     "ts-jest": "^27.0.3",
     "typescript": "^4.3.5"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "jest": "^27.0.6",
     "save-dev": "0.0.1-security"
   }

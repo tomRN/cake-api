@@ -23,6 +23,11 @@ custom:
     region: ${self:provider.region}
     stage: ${self:provider.stage}
     cakeTableName: cake_api_cakes_${self:custom.stage}
+    serverless-offline:
+      httpPort: 4040
+
+plugins:
+  - serverless-offline
 
 package:
     exclude:
