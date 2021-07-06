@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "build": "tsc",
+    "test": "jest",
+    "deploy-dev": "npm run build && sls deploy --stage dev --profile tomn-personal",
+    "start": "npm run build && SLS_DEBUG=* AWS_PROFILE=tomn-personal sls offline"
   },
   "repository": {
     "type": "git",

@@ -22,7 +22,7 @@ custom:
     service: ${self:service}
     region: ${self:provider.region}
     stage: ${self:provider.stage}
-    cakeTableName: ${self:custom.service}-${self:custom.stage}
+    cakeTableName: cake_api_cakes_${self:custom.stage}
 
 package:
     exclude:
@@ -30,18 +30,19 @@ package:
         - layers/**
 
 resources:
-  CakeTable:
-    Type: AWS::DynamoDB::Table
-    DeletionPolicy: Retain
-    Properties:
-      TableName: ${self:custom.cakeTableName}
-      AttributeDefinitions:
-        - AttributeName: ID
-          AttributeType: S
-      KeySchema:
-        - AttributeName: ID
-          KeyType: HASH
-      BillingMode: PAY_PER_REQUEST
+  Resources:
+    CakeTable:
+      Type: AWS::DynamoDB::Table
+      DeletionPolicy: Retain
+      Properties:
+        TableName: ${self:custom.cakeTableName}
+        AttributeDefinitions:
+          - AttributeName: ID
+            AttributeType: S
+        KeySchema:
+          - AttributeName: ID
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
     
 
 functions:
@@ -54,19 +55,11 @@ functions:
           cors: true
 
   putCake:
-    handler: build/endpoints/lessons/putCAke.handler
+    handler: build/endpoints/cakes/putCake.handler
     events:
       - http:
           path: cake/{cakeID}
           method: PUT
-          cors: true
-
-  getLesson:
-    handler: build/endpoints/lessons/getLesson.handler
-    events:
-      - http:
-          path: lessons/{lessonID}
-          method: GET
           cors: true
 
   getCakes:
@@ -78,7 +71,7 @@ functions:
           cors: true
 
   deleteCake:
-    handler: build/endpoints/lessons/deleteCakes.handler
+    handler: build/endpoints/cakes/deleteCakes.handler
     events:
       - http:
           path: cakes/{cakesID}
