@@ -8,3 +8,5 @@
 + Add serverless.yml file with a table and stubs for the endpoints
 + Add simple blank file for each handler that returns a 500 not implemented.
     ++ While doing the above, add a responses helper lib and associated unit test.
+    ++ Inc adding jest, a jest config, adding ts-jest and setting up test command
+
