@@ -76,9 +76,9 @@ functions:
           cors: true
 
   deleteCake:
-    handler: build/endpoints/cakes/deleteCakes.handler
+    handler: build/endpoints/cakes/deleteCake.handler
     events:
       - http:
-          path: cakes/{cakesID}
+          path: cakes/{cakeID}
           method: DELETE
           cors: true
