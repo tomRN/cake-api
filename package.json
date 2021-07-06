@@ -1,0 +1,26 @@
+{
+  "name": "cake-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomRN/cake-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tomRN/cake-api/issues"
+  },
+  "homepage": "https://github.com/tomRN/cake-api#readme",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.77",
+    "@types/jest": "^26.0.23",
+    "@types/node": "^16.0.0",
+    "serverless": "^2.50.0",
+    "typescript": "^4.3.5"
+  }
+}

@@ -1,0 +1,86 @@
+# Configuration file for Serverless service
+
+service: cake-api
+
+# Configure the service provider.
+provider:
+    name: aws
+    runtime: nodejs12.x
+    region: eu-west-2
+    stage: ${opt:stage, 'dev'}
+    profile: ${opt:profile, 'tomn-personal'} # Requires that you have a profile called 'tomn-personal' on your machine to deploy, in reality our CD pipeline would take care of deployments
+    environment:
+      cakeTableName : ${self:custom.cakeTableName}
+    versionFunctions: false
+    iamRoleStatements: # Too permissive but ok for a simple POC.
+        - Effect: 'Allow'
+          Action:
+            - dynamodb:*
+          Resource: '*'
+
+custom:
+    service: ${self:service}
+    region: ${self:provider.region}
+    stage: ${self:provider.stage}
+    cakeTableName: ${self:custom.service}-${self:custom.stage}
+
+package:
+    exclude:
+        - src/**
+        - layers/**
+
+resources:
+  CakeTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    Properties:
+      TableName: ${self:custom.cakeTableName}
+      AttributeDefinitions:
+        - AttributeName: ID
+          AttributeType: S
+      KeySchema:
+        - AttributeName: ID
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+    
+
+functions:
+  postCake:
+    handler: build/endpoints/cakes/postCake.handler
+    events:
+      - http:
+          path: cakes
+          method: POST
+          cors: true
+
+  putCake:
+    handler: build/endpoints/lessons/putCAke.handler
+    events:
+      - http:
+          path: cake/{cakeID}
+          method: PUT
+          cors: true
+
+  getLesson:
+    handler: build/endpoints/lessons/getLesson.handler
+    events:
+      - http:
+          path: lessons/{lessonID}
+          method: GET
+          cors: true
+
+  getCakes:
+    handler: build/endpoints/cakes/getCakes.handler
+    events:
+      - http:
+          path: cakes
+          method: GET
+          cors: true
+
+  deleteCake:
+    handler: build/endpoints/lessons/deleteCakes.handler
+    events:
+      - http:
+          path: cakes/{cakesID}
+          method: DELETE
+          cors: true

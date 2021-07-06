@@ -1,0 +1,26 @@
+{
+    // Basic Settings
+    "compilerOptions": {
+        "module": "commonjs",
+        "rootDir": "./src",
+        "target": "ES2017",
+        "sourceMap": false,
+        "outDir": "build",
+        // Strict Settings
+        "forceConsistentCasingInFileNames": true,
+        "noImplicitReturns": true,
+        "strict": true,
+        //"noUnusedLocals": true,
+        //"noUnusedParameters": true,
+        "resolveJsonModule": true,
+        "baseUrl": "./src",
+        "esModuleInterop": true
+    },
+    "exclude": [
+        "node_modules",
+        "*.test.ts"
+    ],
+    "include": [
+        "./src"
+    ]
+}
