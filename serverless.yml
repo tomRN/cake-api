@@ -63,7 +63,7 @@ functions:
     handler: build/endpoints/cakes/putCake.handler
     events:
       - http:
-          path: cake/{cakeID}
+          path: cakes/{cakeID}
           method: PUT
           cors: true
 

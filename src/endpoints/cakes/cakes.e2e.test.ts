@@ -80,15 +80,65 @@ describe("Cake endpoints work e2e as expected", () => {
     })
 
     it("Allows us to GET the two cakes we just created", async () => {
+        const idOfLastCakeWeCreated = newCakeIDs[newCakeIDs.length - 1];
+        const idOfLastButOneCakeWeCreated = newCakeIDs[newCakeIDs.length - 2];
+
         let res = await axios.get(`${baseURL}/cakes`);
         expect(res.status).toBe(200);
         expect(res.data.cakes.length).toBeGreaterThanOrEqual(2);
-        let chocolateCakeFromAPI = (res.data.cakes as any[]).find(x => x.name === chocolateCake.name);
-        let coconutCakeFromAPI = (res.data.cakes as any[]).find(x => x.name === coconutCake.name);
+        let chocolateCakeFromAPI = (res.data.cakes as any[]).find(x => x.ID === idOfLastCakeWeCreated);
+        let coconutCakeFromAPI = (res.data.cakes as any[]).find(x => x.ID === idOfLastButOneCakeWeCreated);
         //Confirm the response contains both cakes
         expect(chocolateCakeFromAPI).toBeTruthy();
         expect(coconutCakeFromAPI).toBeTruthy();
+
+        //Confirm they look as expected
+        expect(chocolateCakeFromAPI).toMatchObject({
+            ...chocolateCake,
+            ID: idOfLastCakeWeCreated
+        })
+        expect(coconutCakeFromAPI).toMatchObject({
+            ...coconutCake,
+            ID: idOfLastButOneCakeWeCreated
+        })
+
     })
+
+
+    it("Allows us to Update the last cake we just created to change the comment", async () => {
+        const coconutCakeID = newCakeIDs[newCakeIDs.length - 1];
+        const updateBody = {
+            ...coconutCake,
+            comment: "This is an updated field"
+        }
+        const expectedCakeAfterUpdate = {
+            ID: coconutCakeID,
+            ...updateBody
+        }
+        let res = await axios.put(`${baseURL}/cakes/${coconutCakeID}`, {
+            ...updateBody
+        });
+        expect(res.status).toBe(200);
+        expect(res.data).toMatchObject(expectedCakeAfterUpdate);
+    })
+
+    it("Wont allow us to update a cake if we post up an invalid cake", async () => {
+        const coconutCakeID = newCakeIDs[newCakeIDs.length - 1];
+        const updateBody = {
+            "comment": "We are trying to just update one field here"
+        }
+        try {
+            let res = await axios.put(`${baseURL}/cakes/${coconutCakeID}`, {
+                ...updateBody
+            });
+            expect("No error").toBe("Should throw an error when trying to put an invalid cake")
+        } catch (e) {
+            if (e.matcherResult?.pass === false) throw e; //it's a jest error, rethrow.
+            expect(e.response?.status).toEqual(400);
+        }
+    })
+
+
 
     afterAll(async () => {
         //Tidy up any cakes we created.

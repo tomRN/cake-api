@@ -5,12 +5,12 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "test": "jest",
+    "test": "AWS_PROFILE=tomn-personal STAGE=dev TEST_LOCAL=yes jest",
     "test-unit": "jest ./*.unit.test.ts",
     "test-e2e-local": "echo 'e2e testing against locally running service....' && AWS_PROFILE=tomn-personal STAGE=dev TEST_LOCAL=yes jest ./*.e2e.test.ts",
     "test-e2e-dev": "echo 'e2e testing against deployed dev endpoints...' && AWS_PROFILE=tomn-personal STAGE=dev jest ./*.e2e.test.ts",
     "deploy-dev": "npm run build && sls deploy --stage dev --profile tomn-personal",
-    "start": "npm run build && SLS_DEBUG=* AWS_PROFILE=tomn-personal sls offline"
+    "start": "echo 'Note for the locally running endpoints to hit the DB you will need the AWS client on your machine, and aws profile credentials for access to Tom Ns AWS account && npm run build && SLS_DEBUG=* AWS_PROFILE=tomn-personal sls offline"
   },
   "repository": {
     "type": "git",
