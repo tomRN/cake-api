@@ -4,3 +4,7 @@ export interface PostCake {
     imageURL: string,
     yumFactor: number
 }
+
+export interface Cake extends PostCake {
+    ID: string
+}
