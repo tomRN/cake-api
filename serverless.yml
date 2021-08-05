@@ -48,9 +48,13 @@ plugins:
   - serverless-offline
 
 package:
-    exclude:
-        - src/**
-        - layers/**
+  excludeDevDependencies: true
+  patterns:
+    - '!src/**'
+    - '!layers/**'
+    - '!node_modules/aws-sdk/**'
+    - '!seed/**'
+    - '!.dynamodb/**'
 
 resources:
   Resources:
