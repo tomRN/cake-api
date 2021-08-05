@@ -1,5 +1,16 @@
 import * as AWS from 'aws-sdk';
-const documentClient = new AWS.DynamoDB.DocumentClient({ region: (process.env.region || "eu-west-2") });
+
+let docClientConfig: any = { region: (process.env.region || "eu-west-2") }
+if (process.env.DYNAMO_DB_LOCAL) {
+    docClientConfig = {
+        region: 'localhost',
+        endpoint: 'http://localhost:8000',
+        accessKeyId: 'DEFAULT_ACCESS_KEY',  // needed if you don't have aws credentials at all in env
+        secretAccessKey: 'DEFAULT_SECRET' // needed if you don't have aws credentials at all in env
+    }
+}
+
+const documentClient = new AWS.DynamoDB.DocumentClient(docClientConfig);
 
 //Normally would unit test this, but won't under the time constraints of this excercise.
 

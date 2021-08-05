@@ -20,9 +20,20 @@ If we were working on this as a development team we'd get everyone set up with a
 ## Running locally
 `npm i` to grab dependencies
 
+
+To run dynamo db local, I also needed to
+
++ install Java SDK https://www.oracle.com/uk/java/technologies/javase-jdk11-downloads.html
++ Run a separate command to install dynamo db local `sls dynamodb install`
++ Run `sls dynamodb start` and then `aws dynamodb list-tables --endpoint-url http://localhost:8000` to check all running locally correctly
++ To view the contents of a table, you can run `aws dynamodb scan --table-name cake_api_cakes_dev --endpoint-url http://localhost:8000`
+
+Then run the following to start the service locally:
+
 `npm run start`
 
 uses sls offline to run a version of the service locally on port 4040.
+it also starts a local dynamodb instance on port 8000
 
 NOTE - DB connectivity *will not work* unless you have the aws-cli installed on your machine, and an aws profile called tomn-personal, with credentials of an IAM user with access to the dev databases. Contact Tom N if you want to get this set up, or run the unit tests, and the tests against dev to verify that this is working as you expect without having to run the code locally.
 

@@ -1,6 +1,5 @@
 import { getEndpointURLForCurrentEnv } from "../../lib/self"
 import axios from 'axios';
-import { PassThrough } from "stream";
 
 describe("Cake endpoints work e2e as expected", () => {
 

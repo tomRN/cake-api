@@ -1,0 +1,9 @@
+[
+    {
+        "name": "Test Cake",
+        "imageURL": "https://www.cookingclassy.com/wp-content/uploads/2014/02/coconut-cake-5-500x500.jpg",
+        "yumFactor": 5,
+        "ID": "TEST_CAKE_ID",
+        "comment": "This cake is seeded into the table automatically"
+    }
+]

@@ -25,8 +25,26 @@ custom:
     cakeTableName: cake_api_cakes_${self:custom.stage}
     serverless-offline:
       httpPort: 4040
+    dynamodb:
+      # If you only want to use DynamoDB Local in some stages, declare them here
+      stages:
+        - dev
+      start:
+        port: 8000
+        inMemory: true
+        heapInitial: 200m
+        heapMax: 1g
+        migrate: true
+        seed: false
+        convertEmptyValues: true
+      seed:
+        testData:
+          sources:
+            - table: cake_api_cakes_${self:custom.stage} #the same as cakeTableName above
+              sources: [./seed/cakes.json]
 
 plugins:
+  - serverless-dynamodb-local
   - serverless-offline
 
 package:
