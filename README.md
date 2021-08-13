@@ -9,19 +9,27 @@ Uses typescript, with jest for testing.
 
 ## Note for reviewer
 > "Both API and app should be downloadable and runnable with a simple git clone ->npm install -> npm start (yarn is fine too!)"
+^ this was a requirement of the task.
 
-^ I haven't been able to meet this criteria, I could have set up a locally running dyamo db instance but even that requires a load of additional faff beyond just running `npm i`
-
-It will run locally, but the locally running version on your machine won't be able to talk to my dev dynamo databases (which are deployed in the cloud).
-
-If we were working on this as a development team we'd get everyone set up with an AWS-CLI with access to an automated test env to get around this. Nonetheless you can still run my e2e and unit tests.
+To run locally some additional faff is required (to get dynamodb local running)
+This is described below.
 
 
 ## Running locally
 `npm i` to grab dependencies
 
+then you need to start dynamodb locally:
 
-To run dynamo db local, I also needed to
+`npm run start-dynamodb`
+
+then you can start the api
+
+`npm run start`
+
+
+### Additional steps to setup / run dynamo db local
+
+To run dynamo db local, I also needed to do some extra steps which you may need to do too:
 
 + install Java SDK https://www.oracle.com/uk/java/technologies/javase-jdk11-downloads.html
 + Run a separate command to install dynamo db local `sls dynamodb install`
@@ -32,18 +40,13 @@ Then run the following to start the service locally:
 
 `npm run start`
 
-uses sls offline to run a version of the service locally on port 4040.
-it also starts a local dynamodb instance on port 8000
-
-NOTE - DB connectivity *will not work* unless you have the aws-cli installed on your machine, and an aws profile called tomn-personal, with credentials of an IAM user with access to the dev databases. Contact Tom N if you want to get this set up, or run the unit tests, and the tests against dev to verify that this is working as you expect without having to run the code locally.
-
 ## Testing
 `npm run test` after an `npm run start` runs all unit tests and end to end tests - again this will require the AWS access mentioned above.
 
 Alternatively:
 
 `npm run test-e2e-dev` runs the e2e tests against the deployed dev endpoints.
-`npm run test-unit` runs the unit tests which should always work.
+`npm run test-unit` runs the unit tests only, not e2e
 
 ## Testing philosophy
 
@@ -70,3 +73,5 @@ The endpoints have been tested with a single e2e script rather than unit tests o
 + Add serverless offline so we can test a locally running version.
 + run npm test-e2e-offline to watch the test fail, we are ready then for development on the endpoints to proceed...
 + Get the first endpoint test passing, then move on to the rest.
+Later...
++ Added in dynamodb local for easier local testing
