@@ -36,12 +36,9 @@ To run dynamo db local, I also needed to do some extra steps which you may need 
 + Run `sls dynamodb start` and then `aws dynamodb list-tables --endpoint-url http://localhost:8000` to check all running locally correctly
 + To view the contents of a table, you can run `aws dynamodb scan --table-name cake_api_cakes_dev --endpoint-url http://localhost:8000`
 
-Then run the following to start the service locally:
-
-`npm run start`
 
 ## Testing
-`npm run test` after an `npm run start` runs all unit tests and end to end tests - again this will require the AWS access mentioned above.
+`npm run test` after an `npm run start` runs all unit tests and end to end tests - note e2e tests require that the service is running locally (see instructions above)
 
 Alternatively:
 
